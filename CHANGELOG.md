@@ -11,7 +11,13 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ## [Unreleased]
 
-## [0.3.0] - 2025-01-12
+## [0.4.0] - 2025-01-15
+
+### Changed
+
+- Project version bump. [883ebf5](https://github.com/sven-seyfert/trivial-todo-list/commit/883ebf579063c94c5048c03bea2933e4b9567e87)
+
+## [0.3.0] - 2025-01-15
 
 ### Added
 
@@ -40,7 +46,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Set item (TODO) count as list header text. [c853738](https://github.com/sven-seyfert/trivial-todo-list/commit/c853738200aac1e68bd1c5d109bc6d4604f263e3)
 - Update executable (v0.2.0). [aafa021](https://github.com/sven-seyfert/trivial-todo-list/commit/aafa02106291ea1e304f21370a8730a174a4e43a)
 
-[Unreleased]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/sven-seyfert/trivial-todo-list/releases/tag/v0.2.0
 
