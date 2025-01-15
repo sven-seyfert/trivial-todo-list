@@ -1,13 +1,12 @@
-;~ get app version online
-Func _TryAppUpdate()
+Func _TryUpdateApp()
     Local Const $sApp        = StringReplace(@ScriptName, '.exe', '')
     Local Const $sAppVersion = _GetAppVersionOnline($sApp)
     If Not @error Then
         If _IsAppVersionNewer($sAppVersion) Then
-            Local Const $sNewApp = _DownloadApp(StringReplace(@ScriptName, '.exe', ''))
+            Local Const $sUpdatedAppFile = _DownloadApp($sApp)
             If Not @error Then
-                MsgBox(64, 'Update to v' & $sAppVersion, 'Update available and being applied.', 5)
-                _UpdateApp($sNewApp)
+                MsgBox(64, 'Update to v' & $sAppVersion, 'Update available and is being applied.', 5)
+                _UpdateApp($sUpdatedAppFile) ; The program will be exited here.
             EndIf
         EndIf
     EndIf
@@ -20,22 +19,21 @@ Func _GetAppVersionOnline($sApp)
 
     FileDelete($sFile)
 
-    Local Const $iForceReloadIgnoreSSLError = 1 + 2
-    Local Const $iByteSize = InetGet($sUrl, $sFile, $iForceReloadIgnoreSSLError)
+    Local Const $iForceReloadIgnoreSSLErrors = 1 + 2
+    Local Const $iByteSize = InetGet($sUrl, $sFile, $iForceReloadIgnoreSSLErrors)
     If $iByteSize == 0 Then
         Return SetError(1, -1, 'InetGet failed.')
     EndIf
 
     Local Const $sAppVersion = IniRead($sFile, 'app-versions', $sApp, '-')
     If $sAppVersion == '-' Or $sAppVersion == '' Then
-        Return SetError(1, -1, 'No app version found.')
+        Return SetError(1, -2, 'No app version found.')
     EndIf
 
     Return $sAppVersion
 EndFunc
 
-;~ check is app version newer
-Func _IsAppVersionNewer($sVersion)
+Func _IsAppVersionNewer($sVersion) ; Expected version formart is "Major.Minor.Patch".
     Local Const $aCurrentVersion  = StringSplit(FileGetVersion(@ScriptName), '.')
     Local Const $aReceivedVersion = StringSplit($sVersion, '.')
 
@@ -53,13 +51,14 @@ Func _IsAppVersionNewer($sVersion)
     Return False
 EndFunc
 
-;~ if yes, download app
 Func _DownloadApp($sApp)
     Local Const $sUrl  = StringFormat('https://github.com/sven-seyfert/trivial-todo-list/raw/refs/heads/main/build/%s.exe', $sApp)
     Local Const $sFile = StringFormat('%s-update.exe', $sApp)
 
-    Local Const $iForceReloadIgnoreSSLError = 1 + 2
-    Local Const $iByteSize = InetGet($sUrl, $sFile, $iForceReloadIgnoreSSLError)
+    FileDelete($sFile)
+
+    Local Const $iForceReloadIgnoreSSLErrors = 1 + 2
+    Local Const $iByteSize = InetGet($sUrl, $sFile, $iForceReloadIgnoreSSLErrors)
     If $iByteSize == 0 Then
         Return SetError(1, -1, 'InetGet failed.')
     EndIf
@@ -67,7 +66,6 @@ Func _DownloadApp($sApp)
     Return $sFile
 EndFunc
 
-;~ then update app
 Func _UpdateApp($sUpdateExecutable)
     If Not @Compiled Then
         Return
@@ -88,8 +86,3 @@ Func _UpdateApp($sUpdateExecutable)
     Run(@ComSpec & $sCommand, $sWorkingDir, @SW_HIDE)
     Exit ; This Exit here is essential.
 EndFunc
-
-;~ error handling
-
-
-;~ change of trivial-todo-list (new version)

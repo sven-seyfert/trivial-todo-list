@@ -20,7 +20,7 @@ _Main()
 
 Func _Main()
     If @Compiled Then
-        _TryAppUpdate()
+        _TryUpdateApp()
     EndIf
 
     Local Const $sFile       = '..\data\todos.txt'
