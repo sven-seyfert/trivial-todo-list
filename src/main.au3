@@ -43,8 +43,7 @@ Func _CreateGui($sAppVersion)
     $mGui.Todo   = GUICtrlCreateInput('', 15, 15, 250, 30) ; 400 -15 -15 -50 -50 -15
     $mGui.Add    = GUICtrlCreateButton('➕', 280, 15, 50)
     $mGui.Remove = GUICtrlCreateButton('➖', 335, 15, 50)
-    ;~ $mGui.List   = _GUICtrlListView_Create($mGui.Handle, '0 TODOs', 15, 60, 370, 280, $LVS_REPORT, $vSunkenEdgeFlag)
-    $mGui.List   = _GUICtrlListView_Create($mGui.Handle, 'TODOs', 15, 60, 370, 280, $LVS_REPORT, $vSunkenEdgeFlag)
+    $mGui.List   = _GUICtrlListView_Create($mGui.Handle, '0 TODOs', 15, 60, 370, 280, $LVS_REPORT, $vSunkenEdgeFlag)
                    _GUICtrlListView_SetColumnWidth($mGui.List, 0, 366)
                    _GUICtrlListView_SetExtendedListViewStyle($mGui.List, $LVS_EX_GRIDLINES + $LVS_EX_FULLROWSELECT)
     $mGui.Close  = GUICtrlCreateButton('Close', 15, 355, 370)
@@ -57,7 +56,7 @@ Func _LoadTodos($sFile)
 
     Local Const $aTODOs = FileReadToArray($sFile)
 
-    ;~ _SetItemCount(Ubound($aTODOs))
+    _SetItemCount(Ubound($aTODOs))
 
     For $sTODO In $aTODOs
         _GUICtrlListView_AddItem($mGui.List, $sTODO)
@@ -92,7 +91,7 @@ Func _AddTodo()
         Return
     EndIf
 
-    ;~ _SetItemCount(1)
+    _SetItemCount(1)
 
     _GUICtrlListView_AddItem($mGui.List, $sTODO)
     GUICtrlSetData($mGui.Todo, '')
@@ -109,7 +108,7 @@ Func _RemoveTodo()
         Return
     EndIf
 
-    ;~ _SetItemCount(-1)
+    _SetItemCount(-1)
 
     _GUICtrlListView_DeleteItem($mGui.List, $aItem[1])
 EndFunc
