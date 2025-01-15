@@ -20,7 +20,9 @@ _Main()
 
 Func _Main()
     If @Compiled Then
-        _TryUpdateApp()
+        Local Const $sUrlVersionDownload   = 'https://raw.githubusercontent.com/sven-seyfert/app-versions/refs/heads/main'
+        Local Const $sUrlAppUpdateDownload = 'https://github.com/sven-seyfert/trivial-todo-list/raw/refs/heads/main/build'
+        _TryUpdateApp($sUrlVersionDownload, $sUrlAppUpdateDownload)
     EndIf
 
     Local Const $sFile       = '..\data\todos.txt'

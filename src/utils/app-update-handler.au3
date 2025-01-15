@@ -1,9 +1,9 @@
-Func _TryUpdateApp()
+Func _TryUpdateApp($sUrlVersionDownload, $sUrlAppUpdateDownload)
     Local Const $sApp        = StringReplace(@ScriptName, '.exe', '')
-    Local Const $sAppVersion = _GetAppVersionOnline($sApp)
+    Local Const $sAppVersion = _GetAppVersionOnline($sApp, $sUrlVersionDownload)
     If Not @error Then
         If _IsAppVersionNewer($sAppVersion) Then
-            Local Const $sUpdatedAppFile = _DownloadApp($sApp)
+            Local Const $sUpdatedAppFile = _DownloadApp($sApp, $sUrlAppUpdateDownload)
             If Not @error Then
                 MsgBox(64, 'Update to v' & $sAppVersion, 'Update available and is being applied.', 5)
                 _UpdateApp($sUpdatedAppFile) ; The program will be exited here.
@@ -12,9 +12,9 @@ Func _TryUpdateApp()
     EndIf
 EndFunc
 
-Func _GetAppVersionOnline($sApp)
+Func _GetAppVersionOnline($sApp, $sUrlVersionDownload)
     Local Const $sFileName = 'versions.ini'
-    Local Const $sUrl      = StringFormat('https://raw.githubusercontent.com/sven-seyfert/app-versions/refs/heads/main/%s', $sFileName)
+    Local Const $sUrl      = StringFormat('%s/%s', $sUrlVersionDownload, $sFileName)
     Local Const $sFile     = StringFormat('%s\%s', @TempDir, $sFileName)
 
     FileDelete($sFile)
@@ -51,8 +51,8 @@ Func _IsAppVersionNewer($sVersion) ; Expected version formart is "Major.Minor.Pa
     Return False
 EndFunc
 
-Func _DownloadApp($sApp)
-    Local Const $sUrl  = StringFormat('https://github.com/sven-seyfert/trivial-todo-list/raw/refs/heads/main/build/%s.exe', $sApp)
+Func _DownloadApp($sApp, $sUrlAppUpdateDownload)
+    Local Const $sUrl  = StringFormat('%s/%s.exe', $sUrlAppUpdateDownload, $sApp)
     Local Const $sFile = StringFormat('%s-update.exe', $sApp)
 
     FileDelete($sFile)
