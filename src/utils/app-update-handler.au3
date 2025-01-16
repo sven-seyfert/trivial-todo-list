@@ -1,20 +1,28 @@
-Func _TryUpdateApp($sUrlVersionDownload, $sUrlAppUpdateDownload)
-    Local Const $sApp        = StringReplace(@ScriptName, '.exe', '')
-    Local Const $sAppVersion = _GetAppVersionOnline($sApp, $sUrlVersionDownload)
-    If Not @error Then
-        If _IsAppVersionNewer($sAppVersion) Then
-            Local Const $sUpdatedAppFile = _DownloadApp($sApp, $sUrlAppUpdateDownload)
-            If Not @error Then
-                MsgBox(64, 'Update to v' & $sAppVersion, 'Update available and is being applied.', 5)
-                _UpdateApp($sUpdatedAppFile) ; The program will be exited here.
-            EndIf
-        EndIf
+Func _TryUpdateApp($mDownloadUrl)
+    Local Const $sAppName    = StringReplace(@ScriptName, '.exe', '')
+    Local Const $sAppVersion = _GetAppVersionOnline($sAppName, $mDownloadUrl)
+    If @error Then
+        Return
     EndIf
+
+    If Not _IsAppVersionNewer($sAppVersion) Then
+        Return
+    EndIf
+
+    Local Const $sUpdatedAppFile = _DownloadApp($sAppName, $mDownloadUrl)
+    If @error Then
+        Return
+    EndIf
+
+    Local Const $iInfoIconTopMostFlag = 64 + 262144
+    MsgBox($iInfoIconTopMostFlag, 'Update to v' & $sAppVersion, 'Update available and is now being applied.', 10)
+
+    _UpdateApp($sUpdatedAppFile) ; The program will be exited here.
 EndFunc
 
-Func _GetAppVersionOnline($sApp, $sUrlVersionDownload)
+Func _GetAppVersionOnline($sAppName, $mDownloadUrl)
     Local Const $sFileName = 'versions.ini'
-    Local Const $sUrl      = StringFormat('%s/%s', $sUrlVersionDownload, $sFileName)
+    Local Const $sUrl      = StringFormat('%s/%s', $mDownloadUrl.VersionsIni, $sFileName)
     Local Const $sFile     = StringFormat('%s\%s', @TempDir, $sFileName)
 
     FileDelete($sFile)
@@ -25,7 +33,7 @@ Func _GetAppVersionOnline($sApp, $sUrlVersionDownload)
         Return SetError(1, -1, 'InetGet failed.')
     EndIf
 
-    Local Const $sAppVersion = IniRead($sFile, 'app-versions', $sApp, '-')
+    Local Const $sAppVersion = IniRead($sFile, 'app-versions', $sAppName, '-')
     If $sAppVersion == '-' Or $sAppVersion == '' Then
         Return SetError(1, -2, 'No app version found.')
     EndIf
@@ -36,10 +44,11 @@ EndFunc
 Func _IsAppVersionNewer($sVersion) ; Expected version formart is "Major.Minor.Patch".
     Local Const $aCurrentVersion  = StringSplit(FileGetVersion(@ScriptName), '.')
     Local Const $aReceivedVersion = StringSplit($sVersion, '.')
+    Local $iCurrentVersionPart, $iReceivedVersionPart
 
     For $i = 1 To 3
-        Local $iCurrentVersionPart  = Number($aCurrentVersion[$i])
-        Local $iReceivedVersionPart = Number($aReceivedVersion[$i])
+        $iCurrentVersionPart  = Number($aCurrentVersion[$i])
+        $iReceivedVersionPart = Number($aReceivedVersion[$i])
 
         If $iCurrentVersionPart < $iReceivedVersionPart Then
             Return True
@@ -51,9 +60,9 @@ Func _IsAppVersionNewer($sVersion) ; Expected version formart is "Major.Minor.Pa
     Return False
 EndFunc
 
-Func _DownloadApp($sApp, $sUrlAppUpdateDownload)
-    Local Const $sUrl  = StringFormat('%s/%s.exe', $sUrlAppUpdateDownload, $sApp)
-    Local Const $sFile = StringFormat('%s-update.exe', $sApp)
+Func _DownloadApp($sAppName, $mDownloadUrl)
+    Local Const $sUrl  = StringFormat('%s/%s.exe', $mDownloadUrl.AppExecutable, $sAppName)
+    Local Const $sFile = StringFormat('%s-update.exe', $sAppName)
 
     FileDelete($sFile)
 
@@ -66,7 +75,7 @@ Func _DownloadApp($sApp, $sUrlAppUpdateDownload)
     Return $sFile
 EndFunc
 
-Func _UpdateApp($sUpdateExecutable)
+Func _UpdateApp($sNewExecutable)
     If Not @Compiled Then
         Return
     EndIf
@@ -76,12 +85,12 @@ Func _UpdateApp($sUpdateExecutable)
     Local Const $iFirstOccurrenceRightToLeftMode = -1
 
     Local Const $sSubStringPosition = StringInStr($sProgramFilePath, '\', $iFastNotCaseSensitiveMode, $iFirstOccurrenceRightToLeftMode)
-    Local Const $sFileName          = StringTrimLeft($sProgramFilePath, $sSubStringPosition)
-    Local Const $sWorkingDir        = StringTrimRight($sProgramFilePath, StringLen($sFileName))
+    Local Const $sCurrentExecutable = StringTrimLeft($sProgramFilePath, $sSubStringPosition)
+    Local Const $sWorkingDir        = StringTrimRight($sProgramFilePath, StringLen($sCurrentExecutable))
 
     Local Const $sCommand = StringFormat( _
         ' /C ping localhost -n 2 & del /F "%s" & move "%s" "%s" & start "" "%s"', _
-        $sFileName, $sUpdateExecutable, $sFileName, $sFileName)
+        $sCurrentExecutable, $sNewExecutable, $sCurrentExecutable, $sCurrentExecutable)
 
     Run(@ComSpec & $sCommand, $sWorkingDir, @SW_HIDE)
     Exit ; This Exit here is essential.
