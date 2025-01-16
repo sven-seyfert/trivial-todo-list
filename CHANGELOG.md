@@ -11,6 +11,17 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ## [Unreleased]
 
+## [0.5.0] - 2025-01-16
+
+### Documented
+
+- Project version bump. [1ebf1c8](https://github.com/sven-seyfert/trivial-todo-list/commit/1ebf1c835caeae9ebf4aad83963629ee9a162f57)
+- Update README.md by few preconditions. [160a1ef](https://github.com/sven-seyfert/trivial-todo-list/commit/160a1efdc95d9faf5be0bfdd3cc2f339e5c57bd8)
+
+### Refactored
+
+- Usage of return early pattern instead of nested conditions (and more). [a4aad43](https://github.com/sven-seyfert/trivial-todo-list/commit/a4aad43b4c3c99e73b7dd5b7fabdff036ac997f2)
+
 ## [0.4.0] - 2025-01-15
 
 ### Changed
@@ -46,7 +57,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Set item (TODO) count as list header text. [c853738](https://github.com/sven-seyfert/trivial-todo-list/commit/c853738200aac1e68bd1c5d109bc6d4604f263e3)
 - Update executable (v0.2.0). [aafa021](https://github.com/sven-seyfert/trivial-todo-list/commit/aafa02106291ea1e304f21370a8730a174a4e43a)
 
-[Unreleased]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/sven-seyfert/trivial-todo-list/releases/tag/v0.2.0
