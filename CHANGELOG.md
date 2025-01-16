@@ -18,6 +18,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Project version bump. [1ebf1c8](https://github.com/sven-seyfert/trivial-todo-list/commit/1ebf1c835caeae9ebf4aad83963629ee9a162f57)
 - Update README.md by few preconditions. [160a1ef](https://github.com/sven-seyfert/trivial-todo-list/commit/160a1efdc95d9faf5be0bfdd3cc2f339e5c57bd8)
 
+### Changed
+
+- Project version bump. [3c7215f](https://github.com/sven-seyfert/trivial-todo-list/commit/3c7215f1a599e9551eb8487644b34e922d2860c8)
+
 ### Refactored
 
 - Usage of return early pattern instead of nested conditions (and more). [a4aad43](https://github.com/sven-seyfert/trivial-todo-list/commit/a4aad43b4c3c99e73b7dd5b7fabdff036ac997f2)
