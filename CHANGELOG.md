@@ -11,6 +11,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ## [Unreleased]
 
+## [0.5.1] - 2025-01-17
+
+### Fixed
+
+- Partly working InetGet options combination. [0e51ffc](https://github.com/sven-seyfert/trivial-todo-list/commit/0e51ffc1c3c794e88092251c3027dcf428755191)
+
 ## [0.5.0] - 2025-01-16
 
 ### Documented
@@ -61,7 +67,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Set item (TODO) count as list header text. [c853738](https://github.com/sven-seyfert/trivial-todo-list/commit/c853738200aac1e68bd1c5d109bc6d4604f263e3)
 - Update executable (v0.2.0). [aafa021](https://github.com/sven-seyfert/trivial-todo-list/commit/aafa02106291ea1e304f21370a8730a174a4e43a)
 
-[Unreleased]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/sven-seyfert/trivial-todo-list/compare/v0.2.0...v0.3.0
