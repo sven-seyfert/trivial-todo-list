@@ -24,9 +24,11 @@ How to easily embed the "app-update-handler.au3" module can be seen in "main.au3
 4. Embed the module in your program flow (before your program will do the main logic).
 ``` autoit
 If @Compiled Then
-    Local Const $sUrlVersionDownload   = 'https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/app-versions/refs/heads/main'
-    Local Const $sUrlAppUpdateDownload = 'https://github.com/YOUR-GITHUB-USERNAME/YOUR-PROGRAM-REPOSITORY-NAME/raw/refs/heads/main/build'
-    _TryUpdateApp($sUrlVersionDownload, $sUrlAppUpdateDownload)
+   Local $mDownloadUrl[]
+         $mDownloadUrl.VersionsIni   = 'https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/app-versions/refs/heads/main'
+         $mDownloadUrl.AppExecutable = 'https://github.com/YOUR-GITHUB-USERNAME/YOUR-PROGRAM-REPOSITORY-NAME/raw/refs/heads/main/build'
+
+   _TryUpdateApp($mDownloadUrl)
 EndIf
 ```
 For `$sUrlAppUpdateDownload` you also can define a download URL for your webspace (like FTP-Server or what ever).
