@@ -27,8 +27,8 @@ Func _GetAppVersionOnline($sAppName, $mDownloadUrl)
 
     FileDelete($sFile)
 
-    Local Const $iForceReloadIgnoreSSLErrors = 1 + 2
-    Local Const $iByteSize = InetGet($sUrl, $sFile, $iForceReloadIgnoreSSLErrors)
+    Local Const $iForceReloadFlag = 1
+    Local Const $iByteSize = InetGet($sUrl, $sFile, $iForceReloadFlag)
     If $iByteSize == 0 Then
         Return SetError(1, -1, 'InetGet failed.')
     EndIf
@@ -66,8 +66,8 @@ Func _DownloadApp($sAppName, $mDownloadUrl)
 
     FileDelete($sFile)
 
-    Local Const $iForceReloadIgnoreSSLErrors = 1 + 2
-    Local Const $iByteSize = InetGet($sUrl, $sFile, $iForceReloadIgnoreSSLErrors)
+    Local Const $iForceReloadFlag = 1
+    Local Const $iByteSize = InetGet($sUrl, $sFile, $iForceReloadFlag)
     If $iByteSize == 0 Then
         Return SetError(1, -1, 'InetGet failed.')
     EndIf
